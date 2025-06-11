@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./src/output.css" rel="stylesheet">
+    <link href="./src/my-style.css" rel="stylesheet">
+    <script src="src/script.js" defer></script>
+</head>
+<body class="relative body-bg-img font-exo">
+<audio id="win-audio" class="hidden" src="src/audio/mixkit-video-game-treasure-2066.wav"></audio>
+<audio id="lose-audio" class="hidden" src="src/audio/mixkit-player-losing-or-failing-2042.wav"></audio>
+<audio id="draw-audio" class="hidden" src="src/audio/mixkit-tech-break-fail-2947.wav"></audio>
+
+<!-- Game Config Page / Game Result Page -->
+<section id="game-config-result"
+         class="absolute flex items-center justify-center inset-0 text-white w-[100%] h-lvh backdrop-blur-xs transition duration-300">
+
+    <!--  Game Configs Container  -->
+    <div id="game-config"
+         class="w-[90%] md:w-[75%] border-2 border-gray-100 rounded-2xl text-center p-3 md:p-8">
+        <!--    Header    -->
+        <h1 class="text-gray-100 text-2xl md:text-3xl xl:text-4xl">Welcome To MathGame!</h1>
+        <!--    Game Rules    -->
+        <div id="game-rules"
+             class="flex flex-col items-center justify-start w-full bg-black/30 border-2 border-gray-100 p-1.5 rounded-xl mt-8 space-y-1 overflow-y-auto max-h-[100px] sm:max-h-max text-white/70 [&>span]:text-xs md:[&>span]:text-sm  lg:[&>span]:text-md xl:[&>span]:text-lg">
+            <div class="text-md md:text-xl lg:text-2xl xl:text-3xl">Rules:</div>
+            <span>- Both Num Keys At the Right And Left Side Of The KeyBoard Can Be Used</span>
+            <span>- First Player Uses Num Keys At Left And Second Player Uses The Ones At Right</span>
+            <span>- Game Difficulty Can Be Set From Easy To Hard</span>
+            <span>- Each Question Has 10 Seconds Time Limit</span>
+            <span>- The One Who Answer Faster Get The Score</span>
+            <span>- Answering A Question Correct Cause +1 Score And Answering 2 Questions Incorrect Cause -1 Score</span>
+        </div>
+
+        <!--    Game Difficulty / Number-Of-Questions / Players`Name   -->
+        <div class="mt-5 grid grid-cols-4 gap-x-2 gap-y-4 text-xs md:text-sm xl:text-base">
+
+            <!--      Game Difficulty      -->
+            <div class="col-span-4 sm:col-span-2 bg-black/30 border-2 border-gray-100 rounded-2xl p-2.5 grid grid-cols-3 gap-1.5 [&>label]:cursor-pointer [&>label]:bg-white/20 [&>label]:p-1.5 [&>label]:rounded-xl [&>label]:outline-2 [&>label]:outline-offset-2 [&>label]:outline-transparent [&>label]:transition-all [&>label]:has-checked:bg-indigo-400 [&>label]:has-checked:outline-offset-2 [&>label]:has-checked:outline-indigo-400">
+                <span class="rounded-xl p-1 col-span-3 bg-black/30 transition duration-300">Difficulty :</span>
+                <label class="">
+                    <input type="radio" name="difficulty" value="Easy" class="appearance-none">
+                    <span class="">Easy</span>
+                </label>
+                <label class="">
+                    <input type="radio" name="difficulty" value="Medium" class="appearance-none" checked>
+                    <span class="">Medium</span>
+                </label>
+                <label class="">
+                    <input type="radio" name="difficulty" value="Hard" class="appearance-none">
+                    <span class="">Hard</span>
+                </label>
+            </div>
+
+            <!--      Number Of Questions      -->
+            <div class="col-span-4 sm:col-span-2 bg-black/30 border-2 border-gray-100 rounded-2xl p-2.5 grid grid-cols-3 gap-1.5 [&>label]:cursor-pointer [&>label]:bg-white/20 [&>label]:p-1.5 [&>label]:rounded-xl [&>label]:outline-2 [&>label]:outline-offset-2 [&>label]:outline-transparent [&>label]:transition-all [&>label]:has-checked:bg-indigo-400 [&>label]:has-checked:outline-offset-2 [&>label]:has-checked:outline-indigo-400 [&>label]:col-span-1">
+                <span class="rounded-xl p-1 col-span-3 px-2.5 bg-black/30 transition duration-300">Number Of Questions :</span>
+                <label>
+                    <input type="radio" name="qs-num" value="10" class="appearance-none">
+                    <span>10</span>
+                </label>
+                <label>
+                    <input type="radio" name="qs-num" value="15" class="appearance-none" checked>
+                    <span>15</span>
+                </label>
+                <label>
+                    <input type="radio" name="qs-num" value="20" class="appearance-none">
+                    <span>20</span>
+                </label>
+            </div>
+
+            <!--      Players`Name      -->
+            <div class="col-span-4 sm:col-span-2 bg-black/30 border-2 border-gray-100 rounded-2xl p-2.5 grid grid-cols-1 gap-2">
+                <input class="input-focus focus:border-0 col-span-1 rounded-xl p-1.5 bg-black/30 text-center"
+                       type="text" placeholder="Player_1" id="player-1-name" readonly>
+                <button class="col-span-1 border-2 border-gray-100 rounded-xl py-1 cursor-pointer" id="change-player-1">
+                    Change!
+                </button>
+            </div>
+
+            <div class="col-span-4 sm:col-span-2 bg-black/30 border-2 border-gray-100 rounded-2xl p-2.5 grid grid-cols-1 gap-2">
+                <input class="input-focus focus:border-0 col-span-1 rounded-xl p-1.5 bg-black/30 text-center"
+                       type="text" placeholder="Player_2" id="player-2-name" readonly>
+                <button class="col-span-1 border-2 border-gray-100 rounded-xl py-1 cursor-pointer" id="change-player-2">
+                    Change!
+                </button>
+            </div>
+
+        </div>
+
+        <!--    Footer    -->
+        <h1 id="start-game-btn" class="text-gray-100 text-lg md:text-2xl xl:text-3xl animate-pulse cursor-pointer mt-4">
+            Press <span
+                class="inline mobile:hidden">Space/Enter</span> <span id="mobile-footer"
+                                                                      class="hidden mobile:inline">Here</span> To
+            Start The Game</h1>
+    </div>
+
+    <!--  Game Result  -->
+    <div id="game-result" class="game-started-Config absolute w-3/4 text-center border-2 border-gray-100 bg-black/30 rounded-2xl grid grid-cols-1 p-2">
+        <span class="mobile:text-2xl sm:text-3xl md:text-4xl lg:text-5xl col-span-1">The Winner is : <span id="winner" class="text-emerald-500 font-bold">Ali_here!</span></span>
+        <span class="col-span-1 space-y-1 mobile:text-md sm:text-lg md:text-xl lg:text-2xl mt-3 p-2">
+            <span id="player-1-final-score" class="w-full text-gray-300 inline-block">Player_1 : 0</span>
+            <span id="player-2-final-score" class="w-full text-gray-300 inline-block">Player_2 : 0</span>
+        </span>
+    </div>
+</section>
+
+<!-- Game Section -->
+<section id="game-page"
+         class="game-started-Config absolute inset-0 flex items-center justify-center transition duration-300 w-[100%] h-lvh backdrop-blur-xs">
+
+    <!--  Timer -> Start The Game In 3 Seconds  -->
+    <div id="pre-start-count-down"
+         class="absolute inset-0 w-full h-lvh flex items-center justify-center z-20 text-9xl font-black">
+        <span id="start-countdown-timer"
+              class="w-[250px] h-[250px] animate-bounce flex items-center justify-center p-1 rounded-full bg-white/20 text-white text-shadow-white">3</span>
+    </div>
+
+    <!--  Game Container  -->
+    <div id="game-container"
+         class="w-[90%] sm:w-[75%] transition duration-300 bg-black/30 p-8 rounded-2xl border-2 border-gray-100 overflow-hidden space-y-5">
+        <!--  Player Scores  -->
+        <div class="flex mobile:hidden items-center justify-between h-16 rounded-xl border-2 border-gray-100 divide-x-2 divide-gray-100">
+            <div class="player-1-info w-1/2 h-full flex items-center justify-center transition hover:bg-white/10 space-x-1">
+                <span id="player-1-name-score-page" class=" text-gray-300 text-md sm:text-xl">Player-1 : </span>
+                <span class="player-1-score text-lg sm:text-2xl bg-pink-500/70 rounded-lg p-0.5 text-white">10</span>
+            </div>
+            <div class="player-2-info w-1/2 h-full flex items-center justify-center transition hover:bg-white/10 space-x-1">
+                <span id="player-2-name-score-page" class="text-gray-300 text-md sm:text-xl">Player-2 : </span>
+                <span class="player-2-score text-lg sm:text-2xl bg-pink-500/70 rounded-lg p-0.5 text-white">15</span>
+            </div>
+        </div>
+
+        <!--    Mobile -> Player 1 Score And Time    -->
+        <div class="hidden mobile:flex transform rotate-180 items-center justify-between p-1 rounded-2xl border-2 border-gray-100">
+            <div class="player-1-info w-1/2 h-full flex items-center justify-center space-x-1">
+                <span class="text-gray-300 text-md">Player-1 : </span>
+                <span class="player-1-score text-lg bg-pink-500/70 rounded-lg p-0.5 text-white">10</span>
+            </div>
+            <span class="timer w-1/2 h-full flex text-xl items-center text-white justify-center">
+                10
+            </span>
+        </div>
+
+        <!--    Game Question / Answers   -->
+        <div class="p-3 flex flex-col items-center justify-center gap-y-7 rounded-2xl border-2 border-gray-100">
+            <!--      Question Box > Show Qs Here -->
+            <div id="qs-box"
+                 class="flex mobile:hidden items-center justify-center gap-x-3 text-white/80 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+                <span id="qs-number-count" class="text-xl md:text-2xl lg:text-3xl text-pink-400 font-bold">1)</span>
+                <span id="qs-num-1" class="p-1.5 sm:p-2 border-2 border-gray-100 rounded-2xl">12</span>
+                <span id="qs-operator">+</span>
+                <span id="qs-num-2" class="p-1.5 sm:p-2 border-2 border-gray-100 rounded-2xl">24</span>
+                <span>=</span>
+                <span id="qs-answer" class="p-1.5 sm:p-2 border-2 border-gray-100 rounded-2xl">?</span>
+            </div>
+            <!--      Answer Box > Show Answer Here -->
+
+            <div id="answer-box-player-1"
+                 class="grid grid-cols-2 overflow-hidden mobile:transform mobile:rotate-180 relative gap-2 w-9/10 xl:w-5/7 mobile:border-2 mobile:border-gray-100 mobile:p-3 mobile:rounded-2xl [&>span]:border-2 [&>span]:border-gray-100 [&>span]:rounded-xl [&>span]:p-2 [&>span]:text-md sm:[&>span]:text-lg lg:[&>span]:text-xl">
+                <div class="col-span-2 hidden mobile:flex text-xl bg-pink-200/30 overflow-hidden items-center justify-center rounded-xl p-1 text-white/90">
+                    Player-1
+                </div>
+                <div class="mobile-answer-box col-span-2 hidden mobile:flex items-center bg-black/30 rounded-2xl py-1 justify-center gap-x-1 text-white/80">
+                    <span id="" class="text-xs text-pink-400 font-bold">1)</span>
+                    <span id="" class="p-1 text-2xl border-2 border-gray-100 rounded-xl">12</span>
+                    <span id="">+</span>
+                    <span id="" class="p-1 text-2xl border-2 border-gray-100 rounded-xl">24</span>
+                    <span>=</span>
+                    <span id="" class="p-1 text-2xl border-2 border-gray-100 rounded-xl">?</span>
+                </div>
+                <span class="col-span-1 text-amber-400">1) <span id="player-1-answer-1"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+                <span class="col-span-1 text-amber-400">2) <span id="player-1-answer-2"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+                <span class="col-span-1 text-amber-400">3) <span id="player-1-answer-3"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+                <span class="col-span-1 text-amber-400">4) <span id="player-1-answer-4"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+            </div>
+
+            <div id="answer-box-player-2"
+                 class="grid-cols-2 gap-2 w-9/10 hidden mobile:grid xl:w-5/7 mobile:border-2 mobile:border-gray-100 mobile:p-3 mobile:rounded-2xl [&>span]:border-2 [&>span]:border-gray-100 [&>span]:rounded-xl [&>span]:p-2 [&>span]:text-md sm:[&>span]:text-lg lg:[&>span]:text-xl">
+                <div class="col-span-2 text-xl hidden mobile:flex bg-pink-200/30 overflow-hidden items-center justify-center rounded-xl p-1 text-white/90">
+                    Player-2
+                </div>
+                <div class="mobile-answer-box col-span-2 hidden mobile:flex items-center bg-black/30 rounded-2xl py-1 justify-center gap-x-1 text-white/80">
+                    <span id="" class="text-xs text-pink-400 font-bold">1)</span>
+                    <span id="" class="p-1 text-2xl border-2 border-gray-100 rounded-xl">12</span>
+                    <span id="">+</span>
+                    <span id="" class="p-1 text-2xl border-2 border-gray-100 rounded-xl">24</span>
+                    <span>=</span>
+                    <span id="" class="p-1 text-2xl border-2 border-gray-100 rounded-xl">?</span>
+                </div>
+                <span class="col-span-1 text-amber-400">1) <span id="player-2-answer-1"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+                <span class="col-span-1 text-amber-400">2) <span id="player-2-answer-2"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+                <span class="col-span-1 text-amber-400">3) <span id="player-2-answer-3"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+                <span class="col-span-1 text-amber-400">4) <span id="player-2-answer-4"
+                                                                 class="mobile:pl-0.5 pl-3 text-lg sm:text-2xl lg:text-3xl text-white/80">+25</span></span>
+            </div>
+        </div>
+
+        <!--    Timer    -->
+        <div id="timer-container"
+             class="w-full flex mobile:hidden items-center justify-center p-4 border-2 border-gray-100 rounded-2xl text-white/80 text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+            <span class="timer">10</span>
+        </div>
+
+        <!--    Mobile -> player 2 , timer    -->
+        <div class="hidden mobile:flex items-center justify-between p-1 rounded-2xl border-2 border-gray-100">
+            <div class="w-1/2 h-full player-2-info flex items-center justify-center space-x-1">
+                <span class="text-gray-300 text-md">Player-1 : </span>
+                <span class="player-2-score text-lg bg-pink-500/70 rounded-lg p-0.5 text-white">10</span>
+            </div>
+            <span class="timer w-1/2 h-full flex text-xl items-center text-white justify-center">
+                10
+            </span>
+        </div>
+
+    </div>
+
+    <!--  Round Win / Lose / Draw  -->
+    <div id="win-lose" class="absolute inset-0 w-full h-lvh flex items-start justify-center pt-3 gap-5 -z-10 transition-all duration-100">
+        <span class="mobile:text-4xl text-7xl lg:text-9xl text-center transition-all duration-100"></span>
+    </div>
+</section>
+
+</body>
+</html>
+
