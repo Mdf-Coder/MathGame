@@ -39,6 +39,9 @@ function startGameHandler(event) {
         document.querySelector('#game-container').classList.add('blur-2xl')
 
         // Start Timer --> Not To Jump Into Game To Quick
+        let countDownTimer = document.getElementById('count-down-timer-audio')
+        countDownTimer.volume = 0.3
+        countDownTimer.play()
         let timerCountDown = 2
         let timer = setInterval(function () {
             document.querySelector('#start-countdown-timer').innerHTML = timerCountDown.toString()
@@ -48,10 +51,12 @@ function startGameHandler(event) {
                 document.querySelector('#start-countdown-timer').classList.remove('animate-bounce')
                 document.querySelector('#game-container').classList.remove('blur-2xl')
 
+                countDownTimer.pause()
+                countDownTimer.currentTime = 0
                 gameHandler()
                 clearInterval(timer)
             }
-        }, 1100)
+        }, 1150)
 
         getGameConfigs()
     }
@@ -259,6 +264,7 @@ function finishRound(whoWinOrLose, qsStatues, audioStatues) {
 
         // Get Proper Audio And Play
         let audio = audioStatues === true ? winAudio : audioStatues === false ? loseAudio : audioStatues === 'Draw' ? drawAudio : 'None'
+        audio.volume = 0.7
         audio.play()
         setTimeout(function () {
 
@@ -304,6 +310,7 @@ function finishRound(whoWinOrLose, qsStatues, audioStatues) {
         } else {
             audio = winAudio
         }
+        audio.volume = 0.7
         audio.play()
         setTimeout(() => {
             audio.pause()
@@ -426,6 +433,9 @@ function gameHandler() {
 
 
     // Question Timer
+    let qsTimer = document.getElementById('qs-timer')
+    qsTimer.volume = 0.08
+    qsTimer.play()
     let roundTimer = 10
     let timer = setInterval(function () {
         if (roundTimer > 0) {
@@ -434,6 +444,8 @@ function gameHandler() {
                 element.innerHTML = roundTimer.toString()
             })
         } else {
+            qsTimer.pause()
+            qsTimer.currentTime = 0
             window.removeEventListener('keyup', checkAnswer)
             for (let i = 2; i < 6; i++) {
                 // Disconnect Event To Not Get Anymore Answer

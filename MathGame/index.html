@@ -8,13 +8,15 @@
     <script src="src/script.js" defer></script>
 </head>
 <body class="relative body-bg-img font-exo">
-<audio id="win-audio" class="hidden" src="src/audio/mixkit-video-game-treasure-2066.wav"></audio>
-<audio id="lose-audio" class="hidden" src="src/audio/mixkit-player-losing-or-failing-2042.wav"></audio>
-<audio id="draw-audio" class="hidden" src="src/audio/mixkit-tech-break-fail-2947.wav"></audio>
+<audio id="win-audio" class="hidden" src="src/audio/win-audio.wav"></audio>
+<audio id="lose-audio" class="hidden" src="src/audio/lose-audio.wav"></audio>
+<audio id="draw-audio" class="hidden" src="src/audio/draw-audio.wav"></audio>
+<audio id="count-down-timer-audio" class="hidden" src="src/audio/count-down-timer.wav"></audio>
+<audio id="qs-timer" class="hidden" src="src/audio/qs-Timer-audio.wav"></audio>
 
 <!-- Game Config Page / Game Result Page -->
 <section id="game-config-result"
-         class="absolute flex items-center justify-center inset-0 text-white w-[100%] h-lvh backdrop-blur-xs transition duration-300">
+         class="absolute flex items-center justify-center inset-0 text-white w-[100%] h-lvh mobile:h-dvh backdrop-blur-xs transition duration-300">
 
     <!--  Game Configs Container  -->
     <div id="game-config"
@@ -109,7 +111,7 @@
 
 <!-- Game Section -->
 <section id="game-page"
-         class="game-started-Config absolute inset-0 flex items-center justify-center transition duration-300 w-[100%] h-lvh backdrop-blur-xs">
+         class="game-started-Config absolute inset-0 flex items-center justify-center transition duration-300 w-[100%] h-lvh mobile:h-dvh backdrop-blur-xs">
 
     <!--  Timer -> Start The Game In 3 Seconds  -->
     <div id="pre-start-count-down"
