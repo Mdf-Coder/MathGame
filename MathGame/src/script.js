@@ -66,7 +66,7 @@ function startGameHandler(event) {
 
 
 ///////// Configs /////////
-let roundQsAnswer, userDevice, questions, gameDifficulty, gameQsNums, playerNameFirst,
+let qsTimer = document.getElementById('qs-timer') ,roundQsAnswer, userDevice, questions, gameDifficulty, gameQsNums, playerNameFirst,
     playerNameSecond, playerScores = {}, playerMistakes = {},
     winAudio = document.getElementById('win-audio'),
     loseAudio = document.getElementById('lose-audio'),
@@ -395,6 +395,9 @@ function gameHandler() {
                     document.getElementById('answer-box-player-1').children[wrongIndex].classList.add('bg-rose-400/50')
                 }
 
+                
+                qsTimer.pause()
+                qsTimer.currentTime = 0
                 updateScoresDOM(playerAnswered, answerStatues)
                 clearInterval(timer)
                 finishRound(playerAnswered, answerStatues, answerStatues)
@@ -424,6 +427,9 @@ function gameHandler() {
                 clickedTarget.parentElement.classList.add('bg-rose-400/50')
             }
 
+            
+            qsTimer.pause()
+            qsTimer.currentTime = 0
             updateScoresDOM(playerAnswered, answerStatues)
             clearInterval(timer)
             finishRound(playerAnswered, answerStatues, answerStatues)
@@ -433,8 +439,7 @@ function gameHandler() {
 
 
     // Question Timer
-    let qsTimer = document.getElementById('qs-timer')
-    qsTimer.volume = 0.08
+    qsTimer.volume = 1.5
     qsTimer.play()
     let roundTimer = 10
     let timer = setInterval(function () {
